@@ -38,6 +38,7 @@ class Connector:
         except:
             traceback.print_exc()
         return None
+
     def getTablesName(self):
         cursor = self.conn.cursor()
         cursor.execute("Show tables;")
@@ -46,7 +47,8 @@ class Connector:
         for item in results:
             tablesName.append([tableName for tableName in item][0])
         return tablesName
-    def fetchOne(self, sql, var):
+
+    def fetchOne(self, sql, var = None):
         try:
             cursor = self.conn.cursor()
             cursor.execute(sql, var)
@@ -56,3 +58,26 @@ class Connector:
         except:
             traceback.print_exc()
         return None
+
+    def fetchAll(self, sql, var = None):
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(sql, var)
+            dataset = cursor.fetchall()
+            cursor.close()
+            return dataset
+        except:
+            traceback.print_exc()
+        return None
+
+    def insertOne(self, sql, var = None):
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute(sql, var)
+            self.conn.commit()
+            affected_row = cursor.rowcount
+            cursor.close()
+            return affected_row
+        except:
+            traceback.print_exc()
+

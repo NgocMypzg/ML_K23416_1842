@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'D:\Data\uel\HK6\ML\Projects\ML_K23416\RetailProject\UI\Login.ui'
+# Form implementation generated from reading ui file 'D:\Data\uel\HK6\ML\Projects\ML_K23416\RetailProject\UI\LoginMainWindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.9.1
 #
@@ -28,7 +28,6 @@ class Ui_MainWindow(object):
         self.lineEditEmail.setObjectName("lineEditEmail")
         self.gridLayout.addWidget(self.lineEditEmail, 1, 1, 1, 2)
         self.lineEditPassword = QtWidgets.QLineEdit(parent=self.groupBox)
-        self.lineEditPassword.setText("")
         self.lineEditPassword.setEchoMode(QtWidgets.QLineEdit.EchoMode.Password)
         self.lineEditPassword.setClearButtonEnabled(True)
         self.lineEditPassword.setObjectName("lineEditPassword")
@@ -77,6 +76,8 @@ class Ui_MainWindow(object):
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.groupBox.setTitle(_translate("MainWindow", "Login System"))
         self.label.setText(_translate("MainWindow", "Email:"))
+        self.lineEditEmail.setText(_translate("MainWindow", "ngocmy@gmail.com"))
+        self.lineEditPassword.setText(_translate("MainWindow", "123"))
         self.label_2.setText(_translate("MainWindow", "Password:"))
         self.checkBoxSave.setText(_translate("MainWindow", "Save log-in infomation"))
         self.pushButtonLogin.setText(_translate("MainWindow", "Login"))

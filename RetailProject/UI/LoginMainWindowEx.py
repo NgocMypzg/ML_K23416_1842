@@ -1,8 +1,9 @@
-from PyQt6.QtWidgets import QMessageBox
+from PyQt6.QtWidgets import QMessageBox, QMainWindow
 
 from RetailProject.Connectors.Employee_Connector import Employee_Connector
-from RetailProject.UI.MainWindow import Ui_MainWindow
-
+from RetailProject.UI import EmployeeMainWindowEx
+from RetailProject.UI.LoginMainWindow import Ui_MainWindow
+from RetailProject.UI.EmployeeMainWindowEx import EmployeeMainWindowEx
 
 class LoginWindowEx(Ui_MainWindow):
     def __init__(self):
@@ -30,9 +31,7 @@ class LoginWindowEx(Ui_MainWindow):
             msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             msg.exec()
         else:
-            msg = QMessageBox()
-            msg.setIcon(QMessageBox.Icon.Information)
-            msg.setText("Employee Connector Login Successful")
-            msg.setWindowTitle("Login Successful")
-            msg.setStandardButtons(QMessageBox.StandardButton.Ok)
-            msg.exec()
+            self.gui_emp = EmployeeMainWindowEx()
+            self.gui_emp.setupUi(QMainWindow())
+            self.gui_emp.showWindow()
+            self.MainWindow.close()
