@@ -10,7 +10,7 @@ class Employee_Connector(Connector):
         dataset = self.fetchOne(sql, val)
         if not dataset:
             return None
-        emp = Employee(dataset[0], dataset[1], dataset[2], dataset[3], dataset[4], dataset[5], dataset[6])
+        emp = Employee(dataset[0], dataset[1], dataset[2], dataset[3], dataset[4], dataset[6], dataset[5])
         return emp
 
     def getAllEmployee(self):
@@ -19,7 +19,7 @@ class Employee_Connector(Connector):
         print(dataset)
         employees = []
         for emp in dataset:
-            e = Employee(emp[0], emp[1], emp[2], emp[3], emp[4], emp[5], emp[6])
+            e = Employee(emp[0], emp[1], emp[2], emp[3], emp[4], emp[6], emp[5])
             employees.append(e)
         return employees
 
@@ -30,7 +30,7 @@ class Employee_Connector(Connector):
         dataset = self.fetchOne(sql, val)
         if not dataset:
             return None
-        emp = Employee(dataset[0], dataset[1], dataset[2], dataset[3], dataset[4], dataset[5], dataset[6])
+        emp = Employee(dataset[0], dataset[1], dataset[2], dataset[3], dataset[4], dataset[6], dataset[5])
         return emp
 
     def insertOneEmployee(self, emp : Employee):
@@ -72,6 +72,14 @@ class Employee_Connector(Connector):
         result = self.insertOne(sql, val)
         return result
 
+    def deleteOneEmployee(self, id):
+        sql = """
+        DELETE FROM `employee`
+        WHERE id = %s;
+        """
+        var = (id, )
+        result = self.insertOne(sql, var)
+        return result
 
 
 

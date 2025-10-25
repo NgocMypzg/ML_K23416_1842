@@ -9,6 +9,7 @@ from RetailProject.UI.EmployeeMainWindow import Ui_MainWindow
 class EmployeeMainWindowEx(Ui_MainWindow):
     def __init__(self):
         self.empc = Employee_Connector()
+        self.is_completed = True
 
     def setupUi(self, MainWindow):
         super().setupUi(MainWindow)
@@ -19,7 +20,9 @@ class EmployeeMainWindowEx(Ui_MainWindow):
     def showWindow(self):
         self.MainWindow.show()
 
-    def displayEmployeeIntoTable(self):
+    def displayEmployeeIntoTable(self): # do hàm tự chạy khi có sự thay đổi dữ liệu
+        if not self.is_completed:
+            return
         self.employees = self.empc.getAllEmployee()
         # Remove existing data
         self.tableWidget_ListEmp.setRowCount(0)
@@ -52,6 +55,37 @@ class EmployeeMainWindowEx(Ui_MainWindow):
         self.pushButton_New.clicked.connect(self.clearAll)
         self.tableWidget_ListEmp.itemSelectionChanged.connect(self.showDetailEmployee)
         self.pushButton_Save.clicked.connect(self.saveEmployee)
+        self.pushButton_Update.clicked.connect(self.updateEmployee)
+
+    def updateEmployee(self):
+        self.is_completed = False
+        id = self.lineEdit_EmpID.text()
+        code = self.lineEdit_EmpCode.text()
+        name = self.lineEdit_EmpName.text()
+        phone = self.lineEdit_EmpPhone.text()
+        email = self.lineEdit_Email.text()
+        password = self.lineEdit_EmpPassword.text()
+        is_deleted = self.checkBox_IsDeleted.isChecked()
+        print(int(is_deleted))
+        emp = Employee(id, code, name, phone, email, password, int(is_deleted))
+        print(emp)
+        result = self.empc.updateOneEmployee(emp)
+        if result > 0:
+            self.displayEmployeeIntoTable()
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Information)
+            msg.setText("Success to update employee")
+            msg.setWindowTitle("Update Successfully")
+            msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg.exec()
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Warning)
+            msg.setText("Failed to update new employee")
+            msg.setWindowTitle("Update Falied")
+            msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg.exec()
+        self.is_completed = True
 
     def clearAll(self):
         self.lineEdit_EmpID.clear()
@@ -70,6 +104,7 @@ class EmployeeMainWindowEx(Ui_MainWindow):
         print(id)
         emp = self.empc.getDetailEmployee(id)
         print(emp)
+        print('Kiểu dữ liệu: ',type(emp.IsDeleted))
         if emp:
             self.lineEdit_EmpID.setText(str(emp.ID))
             self.lineEdit_EmpCode.setText(str(emp.EmployeeCode))
@@ -78,9 +113,11 @@ class EmployeeMainWindowEx(Ui_MainWindow):
             self.lineEdit_Email.setText(str(emp.Email))
             if emp.IsDeleted == 1:
                 self.checkBox_IsDeleted.setChecked(True)
+                print("Checked chưa?", self.checkBox_IsDeleted.isChecked())
             else:
                 self.checkBox_IsDeleted.setChecked(False)
     def saveEmployee(self):
+        self.is_completed = False
         code = self.lineEdit_EmpCode.text()
         name = self.lineEdit_EmpName.text()
         phone = self.lineEdit_EmpPhone.text()
@@ -97,6 +134,22 @@ class EmployeeMainWindowEx(Ui_MainWindow):
             msg.setWindowTitle("Insert Falied")
             msg.setStandardButtons(QMessageBox.StandardButton.Ok)
             msg.exec()
+        self.is_completed = True
+
+    def deleteEmployee(self):
+        self.is_completed = False
+        id = self.lineEdit_EmpID.text()
+        result = self.empc.deleteOneEmployee(id)
+        if result > 0:
+            self.displayEmployeeIntoTable()
+        else:
+            msg = QMessageBox()
+            msg.setIcon(QMessageBox.Icon.Warning)
+            msg.setText("Failed to delete employee")
+            msg.setWindowTitle("Delete Falied")
+            msg.setStandardButtons(QMessageBox.StandardButton.Ok)
+            msg.exec()
+        self.is_completed = True
 
 
 

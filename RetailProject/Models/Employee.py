@@ -14,5 +14,5 @@ class Employee:
         self.Password = Password
         self.IsDeleted = IsDeleted
     def __str__(self):
-        info = "ID: {}\nName: {}\nPhone: {}\nEmail: {}".format(self.ID, self.Name, self.Phone, self.Email)
+        info = "ID: {}\nName: {}\nPhone: {}\nEmail: {}\nDeleted: ".format(self.ID, self.Name, self.Phone, self.Email, self.IsDeleted)
         return info
