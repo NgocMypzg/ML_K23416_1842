@@ -32,7 +32,8 @@ def closeConnection(conn):
 def QueryDataset(conn, sql):
     cursor = conn.cursor()
     cursor.execute(sql)
-    df = pd.DataFrame(cursor.fetchall())
+    columns = [col[0] for col in cursor.description]
+    df = pd.DataFrame(cursor.fetchall(), columns=columns)
     return df
 
 def showHistogram(df, columns):
