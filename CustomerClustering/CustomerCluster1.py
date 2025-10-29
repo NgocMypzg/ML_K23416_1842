@@ -94,5 +94,12 @@ def visualize3DKMeans(df, columns, hover_data, cluster):
                         color = "cluster",
                         hover_data = hover_data,
                         category_orders={'cluster': range(0, cluster)})
-    fig.update(margin = dict(l = 0, r = 0, b = 0, t = 0))
+    fig.update_layout(margin = dict(l = 0, r = 0, b = 0, t = 0))
     fig.show()
+
+def printClusterDetails(df, cluster_col='cluster'):
+    clusters = df[cluster_col].unique()
+    for c in sorted(clusters):
+        print(f"\n===== Cluster {c+1} =====")
+        cluster_df = df[df[cluster_col] == c]
+        print(cluster_df[['CustomerId', 'Age', 'Annual_Income', 'Spending_Score']])
