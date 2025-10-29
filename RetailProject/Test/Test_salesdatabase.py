@@ -1,0 +1,8 @@
+from RetailProject.Connectors.Connector import Connector
+
+conn = Connector(database='salesdatabase')
+conn.connect()
+sql = 'select * from customer'
+df = conn.queryDataset(sql)
+print(df)
+print(df.columns)
